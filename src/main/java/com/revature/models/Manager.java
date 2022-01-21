@@ -1,27 +1,13 @@
 package com.revature.models;
 
-public class Manager extends Person{  //Not sure if I'm going to use this yet.
+//The manager will have full access over employee information as well as customer information.
+//They will have the same abilites of the Employee, as well as the ability to use the customer's account as needed.
+public class Manager extends Person{
 
-    private String username;
-    private String password;
 
-    public Manager(String username) {
-        this.username = username;
+    //Not sure if I'm going to use this yet.
+    public Manager(String firstName, String lastName, String username, String password) {
+        super(firstName, lastName, username, password);
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    @Override
-    public String toString() {
-        return "Manager{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
 }

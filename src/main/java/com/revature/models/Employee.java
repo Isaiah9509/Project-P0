@@ -1,35 +1,12 @@
 package com.revature.models;
 
-public class Employee extends Person{
-    private String username;
-    private String password;
+//The employee will have an account and will have the ability to open accounts for the customer.
+//They will not have any accounts themselves, only the ability to "approve" and view all other accounts.
+public class Employee extends Person {
 
-    public Employee(String username, String password) {
-        this.username = username;
-        this.password = password;
+    //Initializing Constructor
+    public Employee(String firstName, String lastName, String username, String password) {
+        super(firstName, lastName, username, password);
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
 }
