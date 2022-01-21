@@ -1,6 +1,6 @@
-package com.revature.models;
+package com.revature.services;
 
-import com.revature.accounts.Account;
+/*import com.revature.;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -20,6 +20,7 @@ public class CustomerDriver {
         userAccounts.add(testAccount);
         System.out.println(userAccounts);
          */
+/*
         ArrayList<Account> testAccount = new ArrayList<>();
         testAccount.add(new Account(1, 459.32, true));
 
@@ -43,6 +44,7 @@ public class CustomerDriver {
                     System.out.println("Where would you like to make your deposit?");
                     break;
                 case 2:
+                    System.out.println("Where would you like to take your withdrawal from?");
                     break;
                 default:
                     return;
@@ -57,3 +59,4 @@ public class CustomerDriver {
 
     }
 
+*/
