@@ -15,6 +15,14 @@ public class Account {
         this.openState = openState;
     }
 
+    public Customer getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Customer owner) {
+        this.owner = owner;
+    }
+
     public int getId() {
         return id;
     }

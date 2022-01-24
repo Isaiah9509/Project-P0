@@ -34,9 +34,9 @@ public class Customer extends Person{
 
     @Override
     public String toString() {
-        return "Customer{" +
-                "hasAccount=" + hasAccount +
-                ", accounts=" + accounts +
+        return "Customer: " + super.getFirstName() + " " + super.getLastName() +
+                " - has an account? " + hasAccount +
+                ".\nList of accounts owned: " + accounts +
                 '}';
     }
 }
