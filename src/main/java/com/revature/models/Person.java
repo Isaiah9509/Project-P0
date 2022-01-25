@@ -8,6 +8,7 @@ public class Person {
     private String lastName;
     private String username;
     private String password;
+    private String loggedIn;
 
     public Person(String firstName, String lastName, String username, String password) {
         this.firstName = firstName;
