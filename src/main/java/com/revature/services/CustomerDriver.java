@@ -6,6 +6,8 @@ import com.revature.models.Customer;
 import java.util.Collections;
 import java.util.Scanner;
 
+import static com.revature.models.AccountAccess.loginAccount;
+
 public class CustomerDriver {
 
     //Need to login with username and password
@@ -16,7 +18,7 @@ public class CustomerDriver {
     public static void main(String[] args){
         //Testing to see if accounts are working with arraylist.
         //Creating a testCustomer with no account.
-        Customer testCustomer = new Customer("Isaiah", "Payne", "isaiah230", "payne230", false, null);
+        Customer testCustomer = new Customer("Isaiah", "Payne", "isaiah230", "payne230", false, false, null);
         Account testAccount = new Account(1, 240, true);
 
         testCustomer.setAccounts(Collections.singletonList(testAccount));
@@ -26,6 +28,10 @@ public class CustomerDriver {
 
         System.out.println(testAccount.toString());
         System.out.println(testCustomer.toString());
+
+        //Testing account login
+        loginAccount(testCustomer);
+
 
         Scanner scn = new Scanner(System.in);
         //Creating a menu system loop for a placeholder

@@ -21,20 +21,27 @@ public interface AccountAccess {
         //Returns this if the withdrawal was too much. (No change to balance)
         return balance;
     }
+
     //Will be used to essentially transfer the balance from one account to another. (Or any value add to another).
     static void transferBalance(Double account1, Double account2){
-
-
     }
-    //Need a way to login a user.
-    static boolean loginAccount(Person person){
-        while(!person.) {
+
+    //Need a way to login a user.  -- I have no implemented error checks
+    static void loginAccount(Person person){
+        while(!person.getLoggedIn()) {
             Scanner userScanner = new Scanner(System.in);
             System.out.println("Please enter your username and password.");
+            System.out.println("Testing Purposes - Username and Password = " + person.getUsername() + " " + person.getPassword());
             System.out.println("Username:");
             String userInput = userScanner.nextLine();
             System.out.println("Password:");
             String passInput = userScanner.nextLine();
+            if(userInput.equals(person.getUsername()) & passInput.equals(person.getPassword())){
+                System.out.println("Successful Login, welcome " + person.getFirstName() + " " + person.getLastName() + ".");
+                person.setLoggedIn(true);
+            } else {
+                System.out.println("Incorrect login, please try again");
+            }
         }
 
 

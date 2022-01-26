@@ -8,13 +8,22 @@ public class Person {
     private String lastName;
     private String username;
     private String password;
-    private String loggedIn;
+    private boolean loggedIn;
 
-    public Person(String firstName, String lastName, String username, String password) {
+    public Person(String firstName, String lastName, String username, String password, boolean loggedIn) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
+        this.loggedIn = loggedIn;
+    }
+
+    public boolean getLoggedIn() {
+        return loggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
     }
 
     public String getFirstName() {

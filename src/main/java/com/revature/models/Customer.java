@@ -8,9 +8,8 @@ public class Customer extends Person{
     private boolean hasAccount = false;
     private List<Account> accounts;
 
-//Generated generic getters and setters along with a Constructor.
-    public Customer(String firstName, String lastName, String username, String password, boolean hasAccount, List<Account> accounts) {
-        super(firstName, lastName, username, password);
+    public Customer(String firstName, String lastName, String username, String password, boolean loggedIn, boolean hasAccount, List<Account> accounts) {
+        super(firstName, lastName, username, password, loggedIn);
         this.hasAccount = hasAccount;
         this.accounts = accounts;
     }

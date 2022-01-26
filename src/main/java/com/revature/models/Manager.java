@@ -6,8 +6,7 @@ public class Manager extends Person{
 
 
     //Not sure if I'm going to use this yet.
-    public Manager(String firstName, String lastName, String username, String password) {
-        super(firstName, lastName, username, password);
+    public Manager(String firstName, String lastName, String username, String password, boolean loggedIn) {
+        super(firstName, lastName, username, password, loggedIn);
     }
-
 }

@@ -5,8 +5,7 @@ package com.revature.models;
 public class Employee extends Person {
 
     //Initializing Constructor
-    public Employee(String firstName, String lastName, String username, String password) {
-        super(firstName, lastName, username, password);
+    public Employee(String firstName, String lastName, String username, String password, boolean loggedIn) {
+        super(firstName, lastName, username, password, loggedIn);
     }
-
 }
