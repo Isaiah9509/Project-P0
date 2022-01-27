@@ -2,25 +2,17 @@ package com.revature.models;
 
 //Account which will be used to store the account info and balance. It also has a boolean value used to determine
 //If the account is currently open. (This will be modified by the Manager/Employee once the account is requested.
-public class Account {
+public class Account{
     private int id;
-    private Customer owner;
+    private Person owner;
     private double balance;
     private boolean openState = false;
 
-    //Generic constructor as well as getters and setters and a toString() method.
-    public Account(int id, double balance, boolean openState) {
+    public Account(int id, Person owner, double balance, boolean openState) {
         this.id = id;
+        this.owner = owner;
         this.balance = balance;
         this.openState = openState;
-    }
-
-    public Customer getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Customer owner) {
-        this.owner = owner;
     }
 
     public int getId() {
@@ -29,6 +21,14 @@ public class Account {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Person getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Person owner) {
+        this.owner = owner;
     }
 
     public double getBalance() {
@@ -49,6 +49,11 @@ public class Account {
 
     @Override
     public String toString() {
-        return "Account " + id + ": balance:" + balance + ", Opened? " + openState;
+        return "Account{" +
+                "id=" + id +
+                ", owner=" + owner +
+                ", balance=" + balance +
+                ", openState=" + openState +
+                '}';
     }
 }
