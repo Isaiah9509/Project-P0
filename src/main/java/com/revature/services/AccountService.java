@@ -1,13 +1,31 @@
 package com.revature.services;
 
+import com.revature.daos.AccountDao;
+import com.revature.daos.AccountDaoImp;
 import com.revature.models.Account;
 import com.revature.models.Person;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class AccountService {
+    AccountDao accountDao = new AccountDaoImp();
+
+    //Get all accounts and return them in a List.
+    public List<Account> getAllAccounts(){
+        return accountDao.getAllAccounts();
+    }
+
+    //Get an account by it's ID.
+    public Account getAccountById(int id){
+        return accountDao.getAccountById(id);
+    }
 
 //This method will be used to add to the current balance, and will return the new balance.
+    public boolean addBalance(Account account){
+        return accountDao.addBalance(account);
+    }
+
     static Double addBalance(Account account, Double increment){
         return (account.getBalance() + increment);
     }
@@ -21,18 +39,22 @@ public class AccountService {
         return false;
     }
 
-//This method will be used to subtract/withdraw from the current balance, and return the new balance.
-    static Double subtractBalance(Account account, Double withdrawal) {
-        //If there is a balance greater than 0 after you withdraw, return new balance amount.
-        if(canWithdraw(account.getBalance(), withdrawal)) {
-            return (account.getBalance() - withdrawal);
-        } else {
-            //Otherwise, return that you cannot withdraw more than you have in your balance.
-            System.out.println("You cannot withdraw more than your balance");
-        }
-        //Returns this if the withdrawal was too much. (No change to balance)
-        return account.getBalance();
+    public boolean subtractBalance(Account account){
+        return accountDao.subtractBalance(account);
     }
+
+////This method will be used to subtract/withdraw from the current balance, and return the new balance.
+//    static Double subtractBalance(Account account, Double withdrawal) {
+//        //If there is a balance greater than 0 after you withdraw, return new balance amount.
+//        if(canWithdraw(account.getBalance(), withdrawal)) {
+//            return (account.getBalance() - withdrawal);
+//        } else {
+//            //Otherwise, return that you cannot withdraw more than you have in your balance.
+//            System.out.println("You cannot withdraw more than your balance");
+//        }
+//        //Returns this if the withdrawal was too much. (No change to balance)
+//        return account.getBalance();
+//    }
 
     //Will be used to essentially transfer the balance from one account to another. (Or any value add to another).
     static void transferBalance(Account account1, Account account2, Double transferAmount){

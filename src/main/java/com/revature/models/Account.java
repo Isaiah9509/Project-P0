@@ -4,13 +4,13 @@ package com.revature.models;
 //If the account is currently open. (This will be modified by the Manager/Employee once the account is requested.
 public class Account{
     private int id;
-    private Person owner;
+    private int owner_id;
     private double balance;
     private boolean openState = false;
 
-    public Account(int id, Person owner, double balance, boolean openState) {
-        this.id = id;
-        this.owner = owner;
+    public Account(){
+    }
+    public Account(double balance, boolean openState) {
         this.balance = balance;
         this.openState = openState;
     }
@@ -23,12 +23,12 @@ public class Account{
         this.id = id;
     }
 
-    public Person getOwner() {
-        return owner;
+    public int getOwner_id() {
+        return owner_id;
     }
 
-    public void setOwner(Person owner) {
-        this.owner = owner;
+    public void setOwner_id(int owner_id) {
+        this.owner_id = owner_id;
     }
 
     public double getBalance() {
@@ -51,7 +51,7 @@ public class Account{
     public String toString() {
         return "Account{" +
                 "id=" + id +
-                ", owner=" + owner +
+                ", owner=" + owner_id +
                 ", balance=" + balance +
                 ", openState=" + openState +
                 '}';

@@ -1,10 +1,15 @@
 package com.revature.daos;
 
 import com.revature.models.Person;
+import com.revature.models.Type;
 import com.revature.utils.ConnectionUtil;
+import com.sun.org.apache.bcel.internal.generic.ACONST_NULL;
 
+import javax.xml.transform.Result;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 
 public class PersonDaoImp implements PersonDao {
@@ -12,6 +17,8 @@ public class PersonDaoImp implements PersonDao {
     private PreparedStatement preparePerson(Person person, PreparedStatement ps) throws SQLException {
         return null;
     }
+
+
 
     @Override
     public boolean createPerson(Person person) {
@@ -34,8 +41,66 @@ public class PersonDaoImp implements PersonDao {
         return false;
     }
 
+    @Override
+    public Person getPersonById(int id) {
+        Person p = new Person();
+        String sql = "select * from person where id = ?";
+        try(
+        Connection c = ConnectionUtil.startConnection();
+        PreparedStatement ps = c.prepareStatement(sql)) {
 
+            ps.setInt(1, id);
+            System.out.println(ps);
 
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                p.setId(rs.getInt("id"));
+                int typeOrdinal = rs.getInt("type");
+                Type[] types = Type.values(); //["CUSTOMER, EMPLOYEEE, BANKER"]
+                p.setType(types[typeOrdinal]);
+                p.setFirstName(rs.getString("first"));
+                p.setLastName(rs.getString("last"));
+                p.setUsername(rs.getString("username"));
+                p.setPassword(rs.getString("password"));
+                System.out.println(p);
+            } else {
+                System.out.println("Error, user does not exist");
+            }
+
+            } catch(SQLException e){
+            e.printStackTrace();
+        }
+        return p;
+    }
+
+    @Override
+    public List<Person> getAllPerson() {
+        List<Person> people = new ArrayList<>();
+        String sql = "select * from person";
+        try(Connection c = ConnectionUtil.startConnection();
+            Statement s = c.createStatement()) {
+            ResultSet rs = s.executeQuery(sql);
+
+            while(rs.next()){
+                Person person = new Person();
+                person.setId(rs.getInt("id"));
+                int typeOrdinal = rs.getInt("type");
+                Type[] types = Type.values(); //["CUSTOMER, EMPLOYEEE, BANKER"]
+                person.setType(types[typeOrdinal]);
+                person.setFirstName(rs.getString("first"));
+                person.setLastName(rs.getString("last"));
+                person.setUsername(rs.getString("username"));
+                person.setPassword(rs.getString("password"));
+                System.out.println(person.toString());
+                people.add(person);
+                }
+
+            } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println(people);
+        return people;
+    }
 
 
 }
