@@ -11,6 +11,10 @@ public class PersonService {
 
     private PersonDao personDao = new PersonDaoImp();
 
+    public Person getPersonByUserAndPass(String user, String pass){
+        return personDao.getPersonByUserAndPass(user, pass);
+    }
+
     public boolean createPerson(Person p){
         return personDao.createPerson(p);
     }

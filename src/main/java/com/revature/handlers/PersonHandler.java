@@ -1,6 +1,7 @@
 package com.revature.handlers;
 
 import com.revature.models.Person;
+import com.revature.models.Type;
 import com.revature.services.PersonService;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
@@ -26,6 +27,15 @@ public class PersonHandler {
             ctx.status(203);
             ctx.json(p);
         }
+    }
+
+    public void handlePersonRegister(Context ctx){
+        Person p = new Person();
+        p.setType(Type.valueOf("CUSTOMER"));
+        p.setFirstName(ctx.formParam("firstname"));
+        p.setLastName(ctx.formParam("lastname"));
+        p.setUsername(ctx.formParam("username"));
+        p.setUsername(ctx.formParam("password"));
     }
 
     public void handlePersonCreate(Context ctx){

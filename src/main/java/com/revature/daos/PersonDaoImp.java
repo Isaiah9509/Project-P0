@@ -14,11 +14,34 @@ import java.util.List;
 
 public class PersonDaoImp implements PersonDao {
 
-    private PreparedStatement preparePerson(Person person, PreparedStatement ps) throws SQLException {
+
+    @Override
+    public Person getPersonByUserAndPass(String user, String pass) {
+        String sql = "select * from person where username = ? and password = ?";
+        try(Connection c = ConnectionUtil.startConnection();
+            PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setString(1, user);
+            ps.setString(2, pass);
+
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                Person person = new Person();
+                person.setId(rs.getInt("id"));
+                int typeOrdinal = rs.getInt("type");
+                Type[] types = Type.values(); //["CUSTOMER, EMPLOYEEE, BANKER"]
+                person.setType(types[typeOrdinal]);
+                person.setFirstName(rs.getString("first"));
+                person.setLastName(rs.getString("last"));
+                person.setUsername(rs.getString("username"));
+                person.setPassword("hidden");
+                return person;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         return null;
     }
-
-
 
     @Override
     public boolean createPerson(Person person) {
@@ -30,7 +53,6 @@ public class PersonDaoImp implements PersonDao {
             ps.setString(3, person.getLastName());
             ps.setString(4, person.getUsername());
             ps.setString(5, person.getPassword());
-            System.out.println(ps);
             int alteredRows = ps.executeUpdate();
             if(alteredRows == 1){
                 return true;
@@ -62,7 +84,6 @@ public class PersonDaoImp implements PersonDao {
                 p.setLastName(rs.getString("last"));
                 p.setUsername(rs.getString("username"));
                 p.setPassword(rs.getString("password"));
-                System.out.println(p);
             } else {
                 System.out.println("Error, user does not exist");
             }
@@ -80,7 +101,6 @@ public class PersonDaoImp implements PersonDao {
         try(Connection c = ConnectionUtil.startConnection();
             Statement s = c.createStatement()) {
             ResultSet rs = s.executeQuery(sql);
-
             while(rs.next()){
                 Person person = new Person();
                 person.setId(rs.getInt("id"));
@@ -91,14 +111,12 @@ public class PersonDaoImp implements PersonDao {
                 person.setLastName(rs.getString("last"));
                 person.setUsername(rs.getString("username"));
                 person.setPassword(rs.getString("password"));
-                System.out.println(person.toString());
                 people.add(person);
                 }
 
             } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println(people);
         return people;
     }
 

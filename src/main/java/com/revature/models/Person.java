@@ -10,7 +10,6 @@ public class Person {
     private String lastName;
     private String username;
     private String password;
-    private boolean loggedIn = false;
 
     public Person(Type type, String firstName, String lastName, String username, String password) {
         this.type = type;
@@ -72,24 +71,9 @@ public class Person {
         this.password = password;
     }
 
-    public boolean isLoggedIn() {
-        return loggedIn;
-    }
-
-    public void setLoggedIn(boolean loggedIn) {
-        this.loggedIn = loggedIn;
-    }
 
     @Override
     public String toString() {
-        return "Person{" +
-                "id=" + id +
-                ", type=" + type +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", loggedIn=" + loggedIn +
-                '}';
+        return type + " ID: " + id + ", First Name: " + firstName + ", Last Name: " + lastName;
     }
 }

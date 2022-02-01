@@ -1,6 +1,8 @@
 package com.revature.daos;
 
 import com.revature.models.Account;
+import com.revature.models.Person;
+import com.revature.models.Type;
 import com.revature.utils.ConnectionUtil;
 
 import java.sql.*;
@@ -9,22 +11,39 @@ import java.util.List;
 
 public class AccountDaoImp implements AccountDao {
 
+    public boolean transferBalance(Account account1, Account account2){
+
+        return false;
+    }
+
 
     @Override
+    //Takes all accounts and associated people and returns them as a list.
     public List<Account> getAllAccounts() {
-        String sql = "Select * from account";
+        String sql = "Select * from account left join person on person.id = account.owner_id";
         List<Account> accountList = new ArrayList<>();
-
         try(Connection c = ConnectionUtil.startConnection();
             Statement s = c.createStatement()) {
             ResultSet rs = s.executeQuery(sql);
-
             while(rs.next()){
+                //Creates a person and account object and adds it to the account list until there is nothing returned
+                //from rs.next();
+                Person p = new Person();
+                p.setId(rs.getInt("owner_id"));
+                int typeOrdinal = rs.getInt("type");
+                Type[] types = Type.values(); //["CUSTOMER, EMPLOYEEE, BANKER"]
+                p.setType(types[typeOrdinal]);
+                p.setFirstName(rs.getString("first"));
+                p.setLastName(rs.getString("last"));
+                p.setUsername("Hidden");
+                p.setPassword("Hidden");
+
                 Account account = new Account();
                 account.setId(rs.getInt("id"));
-                account.setOwner_id(rs.getInt("owner_id"));
+                account.setOwner(p);
                 account.setBalance(rs.getDouble("balance"));
                 account.setOpenState(rs.getBoolean("open"));
+                System.out.println(p);
                 accountList.add(account);
             }
 
@@ -81,8 +100,7 @@ public class AccountDaoImp implements AccountDao {
     }
 
     public Account getAccountById(int id){
-        String sql = "select * from account where id = ?";
-        Account account = new Account();
+        String sql = "select * from account left join person on person.id = account.owner_id where account.id = ?";
 
         try(Connection c = ConnectionUtil.startConnection();
             PreparedStatement ps = c.prepareStatement(sql)){
@@ -90,8 +108,19 @@ public class AccountDaoImp implements AccountDao {
             ResultSet rs = ps.executeQuery();
 
             if(rs.next()){
-                account.setId(rs.getInt("id"));
-                account.setOwner_id(rs.getInt("owner_id"));
+                Person p = new Person();
+                p.setId(rs.getInt("owner_id"));
+                int typeOrdinal = rs.getInt("type");
+                Type[] types = Type.values(); //["CUSTOMER, EMPLOYEEE, BANKER"]
+                p.setType(types[typeOrdinal]);
+                p.setFirstName(rs.getString("first"));
+                p.setLastName(rs.getString("last"));
+                p.setUsername(rs.getString("username"));
+                p.setPassword("hidden");
+
+                Account account = new Account();
+                account.setId(rs.getInt(id));
+                account.setOwner(p);
                 account.setBalance(rs.getDouble("balance"));
                 account.setOpenState(rs.getBoolean("open"));
 

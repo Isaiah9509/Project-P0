@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface AccountDao {
 
+    public boolean transferBalance(Account account1, Account account2);
+
     public List<Account> getAllAccounts();
 
     public boolean addBalance(Account account);

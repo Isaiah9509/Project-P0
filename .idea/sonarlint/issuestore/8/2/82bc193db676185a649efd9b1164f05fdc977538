@@ -1,7 +1,0 @@
-
-„
-java:S1130"nRemove the declaration of thrown exception 'java.sql.SQLException', as it cannot be thrown from method's body.(Á¯¦þ
-Q	java:S1257"<This block of commented-out lines of code should be removed.(ª²­é
-V	java:S125D"<This block of commented-out lines of code should be removed.( ®Úëùÿÿÿÿ
-[
-java:S2095"EUse try-with-resources or close this "Javalin" in a "finally" clause.(ºå

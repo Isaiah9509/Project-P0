@@ -28,48 +28,10 @@ public class BankDriver {
         //Creating a testCustomer with no account.
 
 
-        Javalin app = Javalin.create().start();
-
-        PersonHandler personHandler = new PersonHandler();
-        AccountHandler accountHandler = new AccountHandler();
+        JavalinApp app = new JavalinApp();
+        app.start(8080);
 
 
-        //Getting all people in the database.
-        app.get("/people", personHandler::handleGetAll);
-        //Getting a person by their id.
-        app.get("/people/{id}", personHandler::handleGetOne);
-        //Creating a person
-        app.post("/people", personHandler::handlePersonCreate);
-        //Getting all accounts in the database.
-        app.get("/account", accountHandler::handleGetAll);
-        //Adding balance to an account.
-        app.put("/account/{id}/deposit", accountHandler::handleAddBalance);
-        app.put("/account/{id}/withdraw", accountHandler::handleSubtractBalance);
-
-        app.exception(NumberFormatException.class, (e, ctx)->{
-        ctx.status(400);
-        ctx.result("The input you provided cannot be parsed to an int value");
-    });
-
-
-//        app.get("/people", ctx -> {
-//            //Interact request
-//            Person newPerson = ctx.bodyAsClass(Person.class);
-//            boolean sucess = personService.createPerson(newPerson);
-//
-//            //Prepare success
-//            if(sucess){
-//                ctx.status(201);
-//            } else {
-//                ctx.status(400);
-//            }
-//        });
-
-//        Person testUser = new Person(Type.CUSTOMER, "Isaiah", "Payne", "isaiah.payne", "default");
-//        personDao.createPerson(testUser);
-
-
-        //Beginning switch statement for menu system. It starts HERE
         }
 
 
