@@ -1,12 +1,19 @@
 package com.revature.daos;
 
 import com.revature.models.Account;
+import com.revature.models.Person;
 
 import java.util.List;
 
 public interface AccountDao {
 
-    public boolean transferBalance(Account account1, Account account2);
+    public boolean deleteAccount(int id);
+
+    public boolean closeAccount(int id);
+
+    public boolean checkIfOpen(int id);
+
+    public boolean openAccount(int id);
 
     public List<Account> getAllAccounts();
 
@@ -15,5 +22,7 @@ public interface AccountDao {
     public boolean subtractBalance(Account account);
 
     public Account getAccountById(int id);
+
+    public boolean applyForAccount(Person person);
 
     }

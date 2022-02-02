@@ -18,6 +18,26 @@ public class PersonHandler {
         ctx.json(people);
     }
 
+    public void handleRegisterPerson(Context ctx){
+        String username = ctx.formParam("username");
+        String password = ctx.formParam("password");
+        String firstname = ctx.formParam("firstname");
+        String lastname = ctx.formParam("lastname");
+        if(username == null || password == null || firstname == null ||password == null){
+            ctx.result("Not enough information provided. Please enter your firstname, lastname, username, and password.");
+        }
+        Person p = personService.createPerson(firstname, lastname, username, password);
+        boolean success = personService.createPerson(p);
+        if(success){
+            ctx.status(200);
+            ctx.result("Account created for " + firstname + " " + lastname);
+        } else {
+            ctx.status(400);
+            ctx.result("Could not create an account.");
+        }
+
+    }
+
     public void handleGetOne(Context ctx){
         Person p = personService.getPersonById(parseInt(ctx.pathParam("id")));
         if(p.getFirstName() == null) {

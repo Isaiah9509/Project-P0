@@ -1,0 +1,26 @@
+
+‹
+java:S1130"nRemove the declaration of thrown exception 'java.sql.SQLException', as it cannot be thrown from method's body.(Á¯¦ş8ÑŠÌ“ë/
+U
+java:S1128"8Remove this unused import 'com.revature.daos.PersonDao'.(œ×Š¹8ÓŠÌ“ë/
+X
+java:S1128";Remove this unused import 'com.revature.daos.PersonDaoImp'.(×ï†×8ÓŠÌ“ë/
+^
+java:S1128"ARemove this unused import 'com.revature.handlers.AccountHandler'.(ô“±8ÔŠÌ“ë/
+b
+java:S1128"@Remove this unused import 'com.revature.handlers.PersonHandler'.(ÛãÈ›ùÿÿÿÿ8ÔŠÌ“ë/
+Z
+java:S1128"8Remove this unused import 'com.revature.models.Account'.(¬šÆÿÿÿÿÿ8ÔŠÌ“ë/
+Y
+java:S1128"7Remove this unused import 'com.revature.models.Person'.(–ÿÀ¡şÿÿÿÿ8ÔŠÌ“ë/
+R
+java:S1128	"5Remove this unused import 'com.revature.models.Type'.(éé÷Ë8ÔŠÌ“ë/
+^
+java:S1128
+"ARemove this unused import 'com.revature.services.AccountService'.(™îµÃ8ÔŠÌ“ë/
+]
+java:S1128"@Remove this unused import 'com.revature.services.PersonService'.(Îç¹Ú8ÕŠÌ“ë/
+Q
+java:S1128"/Remove this unused import 'io.javalin.Javalin'.(Šš¤øÿÿÿÿ8ÕŠÌ“ë/
+M
+java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8ÕŠÌ“ë/

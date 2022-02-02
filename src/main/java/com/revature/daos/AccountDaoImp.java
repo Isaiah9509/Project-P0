@@ -11,8 +11,75 @@ import java.util.List;
 
 public class AccountDaoImp implements AccountDao {
 
-    public boolean transferBalance(Account account1, Account account2){
 
+    @Override
+    public boolean openAccount(int id) {
+        String sql = "update account set open = true where id = ?";
+        try(Connection c = ConnectionUtil.startConnection();
+            PreparedStatement ps = c.prepareStatement(sql)){
+            ps.setInt(1, id);
+
+            int alteredRows = ps.executeUpdate();
+            if(alteredRows == 1){
+                return true;
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean checkIfOpen(int id){
+        String sql = "select open from account where id = ?";
+        Account account = new Account();
+        try(Connection c = ConnectionUtil.startConnection();
+            PreparedStatement ps = c.prepareStatement(sql)){
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()){
+                account.setOpenState(Boolean.parseBoolean(rs.getString(1)));
+                if(account.isOpenState()){
+                    return true;
+                }
+
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteAccount(int id) {
+        String sql = "delete from account where id = ?";
+        try(Connection c = ConnectionUtil.startConnection();
+            PreparedStatement ps = c.prepareStatement(sql)){
+            ps.setInt(1, id);
+
+            int alteredRows = ps.executeUpdate();
+            if(alteredRows == 1){
+                return true;
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean closeAccount(int id) {
+        String sql = "update account set open = false where id = ?";
+        try(Connection c = ConnectionUtil.startConnection();
+            PreparedStatement ps = c.prepareStatement(sql)){
+            ps.setInt(1, id);
+
+            int alteredRows = ps.executeUpdate();
+            if(alteredRows == 1){
+                return true;
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
         return false;
     }
 
@@ -43,7 +110,6 @@ public class AccountDaoImp implements AccountDao {
                 account.setOwner(p);
                 account.setBalance(rs.getDouble("balance"));
                 account.setOpenState(rs.getBoolean("open"));
-                System.out.println(p);
                 accountList.add(account);
             }
 
@@ -132,6 +198,24 @@ public class AccountDaoImp implements AccountDao {
         }
 
         return null;
+    }
+
+    @Override
+    public boolean applyForAccount(Person person) {
+        String sql = "insert into account (owner_id) values (?)";
+        try(Connection c = ConnectionUtil.startConnection();
+            PreparedStatement ps = c.prepareStatement(sql)){
+            ps.setInt(1, person.getId());
+
+            int alteredRows = ps.executeUpdate();
+            if(alteredRows == 1){
+                return true;
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
 }

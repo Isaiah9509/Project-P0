@@ -28,6 +28,8 @@ public class AuthHandler {
         }
     }
 
+
+
     //Employee Level Authorization
     public void authorizeEmployeeToken(Context ctx){
         String authHeader = ctx.header("Authorization");

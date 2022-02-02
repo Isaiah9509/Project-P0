@@ -3,17 +3,16 @@ package com.revature.daos;
 import com.revature.models.Person;
 import com.revature.models.Type;
 import com.revature.utils.ConnectionUtil;
-import com.sun.org.apache.bcel.internal.generic.ACONST_NULL;
+import com.revature.utils.LoggingUtil;
 
-import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 
 public class PersonDaoImp implements PersonDao {
 
+    private LoggingUtil loggingUtil = new LoggingUtil();
 
     @Override
     public Person getPersonByUserAndPass(String user, String pass) {
@@ -22,6 +21,33 @@ public class PersonDaoImp implements PersonDao {
             PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setString(1, user);
             ps.setString(2, pass);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                Person person = new Person();
+                person.setId(rs.getInt("id"));
+                int typeOrdinal = rs.getInt("type");
+                Type[] types = Type.values(); //["CUSTOMER, EMPLOYEEE, BANKER"]
+                person.setType(types[typeOrdinal]);
+                person.setFirstName(rs.getString("first"));
+                person.setLastName(rs.getString("last"));
+                person.setUsername(rs.getString("username"));
+                person.setPassword(rs.getString("password"));
+                loggingUtil.logService(sql, (person.getUsername() + " " + person.getPassword()));
+                return person;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    @Override
+    public Person getPersonByUser(String user) {
+        String sql = "select * from person where username = ?";
+        try(Connection c = ConnectionUtil.startConnection();
+            PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setString(1, user);
 
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
@@ -70,10 +96,7 @@ public class PersonDaoImp implements PersonDao {
         try(
         Connection c = ConnectionUtil.startConnection();
         PreparedStatement ps = c.prepareStatement(sql)) {
-
             ps.setInt(1, id);
-            System.out.println(ps);
-
             ResultSet rs = ps.executeQuery();
             if(rs.next()) {
                 p.setId(rs.getInt("id"));
@@ -84,10 +107,7 @@ public class PersonDaoImp implements PersonDao {
                 p.setLastName(rs.getString("last"));
                 p.setUsername(rs.getString("username"));
                 p.setPassword(rs.getString("password"));
-            } else {
-                System.out.println("Error, user does not exist");
             }
-
             } catch(SQLException e){
             e.printStackTrace();
         }

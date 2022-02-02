@@ -8,4 +8,9 @@ public class ExceptionHandler {
         ctx.status(400);
         ctx.result("The input you provided cannot be parsed ot an int value");
     }
+
+    public void handleRequestNotFound(Context ctx){
+        ctx.status(405);
+        ctx.result("Request type not supported");
+    }
 }

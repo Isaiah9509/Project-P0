@@ -19,17 +19,24 @@ public class JavalinApp {
     private LoggingUtil loggingUtil = new LoggingUtil();
     private ExceptionHandler exceptionHandler = new ExceptionHandler();
     private AuthHandler authHandler = new AuthHandler();
-
+// Javalin app used to create connections and handle paths.
     private Javalin app = Javalin.create().routes(()->{
+        //People path, used to GET ALL PEOPLE, CREATE A PERSON, OR GET A PERSON BY ID.
         path("people",()-> {
             get(personHandler::handleGetAll); //Manager or Employee
-            post(personHandler::handlePersonCreate); //Manager or Employee
+            post(personHandler::handlePersonCreate); //Manager
             path("{id}", ()->{
-                get(personHandler::handleGetOne); //Manager or Employeee
+                get(personHandler::handleGetOne); //Manager or Employee
             });
+            before("*", authHandler::authorizeEmployeeToken);
         });
+        //Account path, used to get all accounts, create an account, get an account by id, add, and withdraw balances.
+        //
         path("account", () -> {
             get(accountHandler::handleGetAll);
+            path("apply", () ->{
+                post(accountHandler::handleApplyAccount);
+            });
             path("{id}", () ->{
                 get(accountHandler::handleGetById);
                 path("withdraw", () ->{
@@ -41,7 +48,23 @@ public class JavalinApp {
                 path("transfer", () ->{
                     put(accountHandler::handleTransfer);
                 });
+                path("open", () ->{
+                    put(accountHandler::handleOpenAccount);
+                });
+                path("close", () ->{
+                    put(accountHandler::handleCloseAccount);
+                });
+                before("open", authHandler::authorizeEmployeeToken);
+                path("close", () ->{
+                    delete(accountHandler::handleDeleteAccount);
+                });
+                before("close", authHandler::authorizeManagerToken);
             });
+            before("*", authHandler::authorizeCustomerToken);
+        });
+        path("register", () -> {
+            post(personHandler::handleRegisterPerson);
+            System.out.println("Made it here");
         });
         path("login", () -> {
            post(authHandler::authenticateLogin);
