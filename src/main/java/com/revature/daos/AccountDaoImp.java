@@ -39,7 +39,8 @@ public class AccountDaoImp implements AccountDao {
             ResultSet rs = ps.executeQuery();
             if (rs.next()){
                 account.setOpenState(Boolean.parseBoolean(rs.getString(1)));
-                if(account.isOpenState()){
+                boolean openState = account.isOpenState();
+                if(openState){
                     return true;
                 }
 

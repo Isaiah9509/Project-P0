@@ -5,6 +5,7 @@ import com.revature.models.Type;
 import com.revature.services.PersonService;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+import io.javalin.http.UnauthorizedResponse;
 
 import java.util.List;
 
@@ -14,8 +15,8 @@ public class PersonHandler {
     PersonService personService = new PersonService();
 
     public void handleGetAll(Context ctx){
-        List<Person> people = personService.getAllPeople();
-        ctx.json(people);
+            List<Person> people = personService.getAllPeople();
+            ctx.json(people);
     }
 
     public void handleRegisterPerson(Context ctx){

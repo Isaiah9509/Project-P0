@@ -49,7 +49,6 @@ public class AccountHandler {
     public void handleOpenAccount(Context ctx){
         int id = Integer.parseInt(ctx.pathParam("id"));
         Account account = accountService.getAccountById(id);
-        System.out.println(account.isOpenState());
         if(account.isOpenState()){
             ctx.status(403);
             ctx.result("The account is already open.");
@@ -69,12 +68,12 @@ public class AccountHandler {
     public void handleCloseAccount(Context ctx){
         int id = Integer.parseInt(ctx.pathParam("id"));
         Account account = accountService.getAccountById(id);
-        boolean accountOpen = !account.isOpenState();
+        boolean accountOpen = account.isOpenState();
         if(!accountOpen) {
             ctx.status(403);
             ctx.result("The account is already closed.");
         } else {
-        boolean success = accountService.openAccount(id);
+        boolean success = accountService.closeAccount(id);
         if(success){
             ctx.status(200);
             ctx.result("The account has been closed");
@@ -154,34 +153,44 @@ public class AccountHandler {
         }
     }
 
-    public void handleAddBalance(Context ctx){
+    public void handleAddBalance(Context ctx) {
         int id = Integer.parseInt(ctx.pathParam("id"));
         Account account = ctx.bodyAsClass(Account.class);
         account.setId(id);
         //Check if the account is open. Throws exception if not.
-        accountService.checkIfAccountOpen(account);
-        boolean success = accountService.addBalance(account);
-        if(success){
-            ctx.result("You have deposited " + account.getBalance() + ", which brings your account to " + accountService.getAccountById(account.getId()).getBalance());
-            ctx.status(200);
-        } else {
+        boolean open = accountService.checkIfAccountOpen(account);
+        if (open == false) {
             ctx.status(400);
+            ctx.result("Account is not open");
+        } else {
+            boolean success = accountService.addBalance(account);
+            if (success) {
+                ctx.result("You have deposited " + account.getBalance() + ", which brings your account to " + accountService.getAccountById(account.getId()).getBalance());
+                ctx.status(200);
+            } else {
+                ctx.status(400);
+            }
         }
     }
 
-    public void handleSubtractBalance(Context ctx){
+    public void handleSubtractBalance(Context ctx) {
         int id = Integer.parseInt(ctx.pathParam("id"));
         Account account = ctx.bodyAsClass(Account.class);
         account.setId(id);
         //Check if the account is open. Throws exception if not.
-        accountService.checkIfAccountOpen(account);
-        boolean success = accountService.subtractBalance(account);
-        if(success){
-            ctx.result("You have withdrew your amount of " + account.getBalance() + ", which brings your account to " + accountService.getAccountById(account.getId()).getBalance());
-            ctx.status(200);
-        } else {
+        boolean open = accountService.checkIfAccountOpen(account);
+        if (!open) {
             ctx.status(400);
-            ctx.result("Not enough balance for this transaction");
+            ctx.result("Account is not open");
+        } else {
+            boolean success = accountService.subtractBalance(account);
+            if (success) {
+                ctx.result("You have withdrew your amount of " + account.getBalance() + ", which brings your account to " + accountService.getAccountById(account.getId()).getBalance());
+                ctx.status(200);
+            } else {
+                ctx.status(400);
+                ctx.result("Not enough balance for this transaction");
+            }
         }
     }
 }

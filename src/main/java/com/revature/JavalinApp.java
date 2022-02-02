@@ -28,10 +28,10 @@ public class JavalinApp {
             path("{id}", ()->{
                 get(personHandler::handleGetOne); //Manager or Employee
             });
-            before("*", authHandler::authorizeEmployeeToken);
+
         });
+        before("*", authHandler::authorizeEmployeeToken);
         //Account path, used to get all accounts, create an account, get an account by id, add, and withdraw balances.
-        //
         path("account", () -> {
             get(accountHandler::handleGetAll);
             path("apply", () ->{
@@ -64,7 +64,6 @@ public class JavalinApp {
         });
         path("register", () -> {
             post(personHandler::handleRegisterPerson);
-            System.out.println("Made it here");
         });
         path("login", () -> {
            post(authHandler::authenticateLogin);

@@ -46,11 +46,12 @@ public class AccountService {
 
     //Check if an account is open.
     public boolean checkIfAccountOpen(Account account){
-        if(account.isOpenState()){
+        boolean success = accountDao.checkIfOpen(account.getId());
+        System.out.println(success);
+        if(success){
             return true;
-        } else {
-            throw new UnauthorizedResponse("This account is not yet approved.");
         }
+        return false;
     }
 
     //Create an account using the person provided. This creates an empty account using the person.id
