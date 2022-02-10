@@ -47,7 +47,6 @@ public class AccountService {
     //Check if an account is open.
     public boolean checkIfAccountOpen(Account account){
         boolean success = accountDao.checkIfOpen(account.getId());
-        System.out.println(success);
         if(success){
             return true;
         }

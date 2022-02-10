@@ -4,12 +4,8 @@ import com.revature.handlers.AccountHandler;
 import com.revature.handlers.AuthHandler;
 import com.revature.handlers.ExceptionHandler;
 import com.revature.handlers.PersonHandler;
-import com.revature.utils.ConnectionUtil;
 import com.revature.utils.LoggingUtil;
 import io.javalin.Javalin;
-import org.postgresql.util.PSQLException;
-
-import java.sql.Connection;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
 
@@ -30,7 +26,7 @@ public class JavalinApp {
             });
 
         });
-        before("*", authHandler::authorizeEmployeeToken);
+        before("people", authHandler::authorizeEmployeeToken);
         //Account path, used to get all accounts, create an account, get an account by id, add, and withdraw balances.
         path("account", () -> {
             get(accountHandler::handleGetAll);
